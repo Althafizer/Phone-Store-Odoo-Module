@@ -17,7 +17,8 @@ class ServiceOrder(models.Model):
         
         return super(ServiceOrder, self).create(vals)\
         
-    name = fields.Char(string="Order Reference", required=True, readonly=True, default=lambda self: _('New')), active = fields.Boolean(string="Active", default=True)
+    name = fields.Char(string="Order Reference", required=True, readonly=True, default=lambda self: _('New'))
+    # active = fields.Boolean(string="Active", default=True)
 
     customer_name = fields.Char(string="Customer Name", required=True)
     customer_phone = fields.Char(string="Customer Phone", required=True)
@@ -37,6 +38,8 @@ class ServiceOrder(models.Model):
                 raise ValidationError("This service order warranty is expired")
 
             self.customer_name = self.previous_order_warranty.customer_name
+            self.customer_phone = self.previous_order_warranty.customer_phone
+            self.service_device_id = self.previous_order_warranty.service_device_id
             self.service_device_color_id = self.previous_order_warranty.service_device_color_id
             self.service_device_ram_id = self.previous_order_warranty.service_device_ram_id
             self.service_device_storage_id = self.previous_order_warranty.service_device_storage_id
@@ -116,17 +119,8 @@ class ServiceOrder(models.Model):
 
     state = fields.Selection([
         ("agent_check", "Agent Check"),
-        ("prepare_to_service_center", "Preparing To Service Center"),
-        ("service_center_delivery", "Delivery To Service Center"),
-        ("agent_delivery", "Delivery To Agent"),
-        ("service_center", "Service Center"),
-        ("service_center_resolved", "Service Center Resolved"),
-        ("service_center_cancel", "Service Center Cancel"),
-        ("service_center_waiting_sparepart", "Waiting For Sparepart (Service Center)"),
-        ("service_center_customer_confirmation", "Customer Confirmation (Service Center)"),
         ("agent_waiting_sparepart", "Waiting For Sparepart (Agent)"),
         ("agent_customer_confirmation", "Customer Confirmation (Agent)"),
-        ("recheck_from_service_center", "Re-Check From Service Center"),
         ("agent_resolved", "Agent Resolved"),
         ("cancel", "Cancel"),
         ("done", "Received By Customer")
@@ -216,4 +210,38 @@ class ServiceOrder(models.Model):
             new_reference = "/".join(reference_parts)
             self.name = new_reference
 
-    
+class ServiceOrderLineSparepart(models.Model):
+    _name = "service.order.line.sparepart"
+    _description = "Service order line sperepart"
+
+    service_order_id = fields.Many2one(comodel_name="service.order")
+    sparepart_id = fields.Many2one(
+        comodel_name="service.management.sparepart",
+        string="Sparepart",
+        required=True)
+    qty = fields.Integer(string="Qty", default=1)
+    asignee_user_id = fields.Many2one(comodel_name="res.users", string="Asignee", required=True, default=lambda self: self.env.user)
+
+class ServiceOrderLineService(models.Model):
+    _name = "service.order.line.service"
+    _description = "Service order line service"
+
+    service_order_id = fields.Many2one(comodel_name="service.order")
+    service_id = fields.Many2one(
+        comodel_name="service.management.service",
+        string="Service",
+        required=True)
+    qty = fields.Integer(string="Qty", default=1)
+    asignee_user_id = fields.Many2one(comodel_name="res.users", string="Asignee", required=True, default=lambda self: self.env.user)
+
+class ServiceOrderLineAccessories(models.Model):
+    _name = "service.order.line.accessories"
+    _description = "Service order line accessories"
+
+    service_order_id = fields.Many2one(comodel_name="service.order")
+    accessories_id = fields.Many2one(
+        comodel_name="service.management.accessories",
+        string="Accessories",
+        required=True)
+    qty = fields.Integer(string="Qty", default=1)
+    asignee_user_id = fields.Many2one(comodel_name="res.users", string="Asignee", required=True, default=lambda self: self.env.user)
