@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="service_order_done_wizard_view" model="ir.ui.view">
+        <field name="name">service.order.done.wizard.view</field>
+        <field name="model">service.order.done.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Set Warranty">
+                <group>
+                    <field name="warranty_type"/>
+                    <field name="warranty_end_date" attrs="{'readonly': [('warranty_type', '!=', 'custom')]}" force_save="1"/>
+                </group>
+                <footer>
+                    <button name="done" type="object" string="Received By Customer"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+</odoo>
