@@ -1,5 +1,5 @@
 {
-    'name': "Phone Store Odoo Module",
+    'name': "Odoo Service Management Module",
     'version': "1.0",
     'author': "Kelompok 9 Agile",
     'application': True,
@@ -7,18 +7,20 @@
         This module is a Phone Store module for Company to" 
         """,
     'depends': [
-        "base",
-        "accounting",
+        "base", 
+        "contacts",
     ],
     'data': [
-        # "security/ir.model.access.csv",
+        "security/service_management_groups.xml",
+        "security/ir.model.access.csv",
 
-        # "data/ir_sequence_data.xml",
+        "data/ir_sequence_data.xml",
 
-        # "views/multi_company_transfer_views.xml",
-        # "views/multi_company_companies_views.xml",
-        # "views/multi_company_location_views.xml"
-        
+        "wizard/service_order_done_views.xml",
+
+        "views/service_order_views.xml",
+        "views/service_menus.xml",
+        "views/configuration_views.xml",
     ],
     'installable': True,
     'license': 'LGPL-3',
