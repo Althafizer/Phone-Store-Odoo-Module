@@ -1,0 +1,216 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="service_order_view_tree" model="ir.ui.view">
+        <field name="name">service.order.tree</field>
+        <field name="model">service.order</field>
+        <field name="arch" type="xml">
+            <tree decoration-muted="state in ('done', 'cancel')" decoration-warning="state not in ('done', 'cancel') and estimated_date&lt;4" decoration-danger="state not in ('done', 'cancel') and estimated_date&lt;1">
+                <field name="name"/>
+                <field name="customer_name"/>
+                <field name="service_device_id"/>
+                <field name="imei_number"/>
+                <field name="order_date"/>
+                <field name="estimated_date"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="service_order_view_search" model="ir.ui.view">
+        <field name="name">service.order.search</field>
+        <field name="model">service.order</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="imei_number"/>
+                <field name="customer_name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="service_order_view_form" model="ir.ui.view">
+        <field name="name">service.order.form</field>
+        <field name="model">service.order</field>
+        <field name="arch" type="xml">
+            <form string="Service Order">
+                <header>
+                    <!-- TODO: Check access for engineers -->
+                    <button name="action_mark_agent_waiting_for_sparepart" states="agent_check" string="Waiting For Sparepart" type="object" groups="service_management.group_service_management_retail_administrator,service_management.group_service_management_retail_engineer"/>
+                    <button name="action_mark_agent_customer_confirmation" states="agent_check" string="Need Customer Confirmation" type="object" groups="service_management.group_service_management_retail_administrator,service_management.group_service_management_retail_engineer"/>
+                    <button name="action_continue_agent_check" states="agent_waiting_sparepart,agent_customer_confirmation" string="Continue" type="object" groups="service_management.group_service_management_retail_administrator,service_management.group_service_management_retail_engineer"/>
+                    <button name="action_mark_agent_resolved" states="agent_check" string="Mark As Resolved" type="object" groups="service_management.group_service_management_retail_administrator,service_management.group_service_management_retail_engineer"/>
+                    <button name="action_mark_as_cancel" states="agent_resolved" string="Cancel" type="object" groups="service_management.group_service_management_retail_administrator,service_management.group_service_management_retail_engineer"/>
+                    <button name="action_mark_as_done" states="agent_resolved" string="Received By Customer" type="object" groups="service_management.group_service_management_retail_administrator,service_management.group_service_management_retail_engineer"/>
+                    <button name="action_set_reference_name_by_request_date" states="agent_check" string="Set Reference Name By Request Date" type="object"/>
+                    <field name="state" widget="statusbar" statusbar_visible="agent_check,done" readonly="1"/>
+                </header>
+                <sheet>
+                    <!-- <widget name="web_ribbon" title="DONE" bg_color="bg-success" attrs="{'invisible': [('state_location', '!=', 'done')]}"/>
+                    <widget name="web_ribbon" title="AGENT" bg_color="bg-success" attrs="{'invisible': [('state_location', '!=', 'agent')]}"/>
+                    <widget name="web_ribbon" title="COURIER" bg_color="bg-success" attrs="{'invisible': [('state_location', '!=', 'courier')]}"/>
+                    <widget name="web_ribbon" title="SERVICE CENTER" bg_color="bg-success" attrs="{'invisible': [('state_location', '!=', 'service_center')]}"/> -->
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group string="General">
+                            <field name="is_warranty"/>
+                            <field name="previous_order_warranty"
+                                options="{'no_create': True}"
+                                attrs="{'invisible': [('is_warranty', '=', False)], 'required': [('is_warranty', '=', True)]}"
+                            />
+                            <field name="order_date" required="1" attrs="{'readonly': [('state', '=','done')]}"/>
+                            <field name="estimated_date" attrs="{'readonly': [('state', '=','done')]}"/>
+                        </group>
+                        <group string="Device Specification">
+                            <field name="service_device_id" options="{'no_create': True}" attrs="{'readonly': [('state', '=','done')]}"/>
+                            <field name="service_device_type" attrs="{'readonly': [('state', '=','done')]}"/>
+                            <field name="service_device_color_id"
+                                options="{'no_create': True}"
+                                attrs="{'invisible': [('service_device_type', 'not in', ('iphone', 'ipad', 'applewatch', 'macbook', 'android'))], 'required': [('service_device_type', 'in', ('iphone', 'ipad', 'applewatch', 'macbook', 'android'))], 'readonly': [('state', '=','done')]}"
+                            />
+                            <field name="service_device_ram_id"
+                                options="{'no_create': True}"
+                                attrs="{'invisible': [('service_device_type', 'not in', ('iphone', 'ipad', 'macbook', 'android'))], 'readonly': [('state', '=','done')]}"
+                            />
+                            <field name="service_device_storage_id"
+                                options="{'no_create': True}"
+                                attrs="{'invisible': [('service_device_type', 'not in', ('iphone', 'ipad', 'macbook', 'android'))], 'readonly': [('state', '=','done')]}"
+                            />
+                            <field name="service_device_appelwatch_size" 
+                                attrs="{'invisible': [('service_device_type', 'not in', ('applewatch'))], 'required': [('service_device_type', 'in', ('applewatch'))], 'readonly': [('state', '=','done')]}"
+                            />
+                            <field name="service_device_network"
+                                attrs="{'invisible': [('service_device_type', 'not in', ('ipad', 'applewatch'))]}"
+                            />
+                            <field name="service_device_year"
+                                attrs="{'invisible': [('service_device_type', 'not in', ('macbook'))], 'required': [('service_device_type', 'in', ('macbook'))], 'readonly': [('state', '=','done')]}"
+                            />
+                            <field name="service_device_mac_processor" 
+                                attrs="{'invisible': [('service_device_type', 'not in', ('macbook'))]}"
+                            />
+                            <field name="service_device_mac_size" 
+                                attrs="{'invisible': [('service_device_type', 'not in', ('macbook'))], 'required': [('service_device_type', 'in', ('macbook'))], 'readonly': [('state', '=','done')]}"
+                            />
+                            <field name="service_device_mac_touchbar" 
+                                attrs="{'invisible': [('service_device_type', 'not in', ('macbook'))], 'required': [('service_device_type', 'in', ('macbook'))], 'readonly': [('state', '=','done')]}"
+                            />
+                            <field name="imei_number" attrs="{'readonly': [('state', '=','done')]}"/>
+                            <field name="passkey" attrs="{'readonly': [('state', '=','done')]}"/>
+                        </group>
+                        <group string="Customer">
+                            <field name="customer_name" attrs="{'readonly': [('state', '=','done')]}"/>
+                            <field name="customer_phone" attrs="{'readonly': [('state', '=','done')]}"/>
+                        </group>
+                    </group>
+
+                    <group string="Quality Control (QC) History">
+                        <field name="service_order_checklist_ids" nolabel="1" colspan="2">
+                            <tree string="Checklist History">
+                                <field name="checklist_date"/>
+                                <field name="asignee_user_id"  options="{'no_create': True}"/>
+                                <field name="notes"/>
+                            </tree>
+                            <form string="Checklist">
+                                <group>
+                                    <group>
+                                        <field name="service_order_id" readonly="1"/>
+                                        <field name="checklist_template_id" options="{'no_create': True}"/>
+                                    </group>
+                                    <group>
+                                        <field name="checklist_date"/>
+                                    </group>
+                                </group>
+
+                                <group string="Components">
+                                    <field name="service_order_checklist_line_ids" nolabel="1" colspan="2">
+                                        <tree editable="1" create="0">
+                                            <field name="component_id" options="{'no_create': True}"/>
+                                            <field name="condition" required="1"/>
+                                            <field name="description"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                                
+                                <group>
+                                    <field name="notes"/>
+                                </group>
+                            </form>
+                        </field>
+                    </group>
+
+                    <group string="Sparepart Used">
+                        <field name="service_order_sparepart_ids" nolabel="1" colspan="2">
+                            <tree editable="1">
+                                <field name="sparepart_id" options="{'no_create': True}"/>
+                                <field name="asignee_user_id" options="{'no_create': True}"/>
+                                <field name="qty"/>
+                            </tree>
+                        </field>
+                    </group>
+
+                    <group string="Services">
+                        <field name="service_order_service_ids" nolabel="1" colspan="2">
+                            <tree editable="1">
+                                <field name="service_id" options="{'no_create': True}"/>
+                                <field name="asignee_user_id" options="{'no_create': True}"/>
+                                <field name="qty"/>
+                            </tree>
+                        </field>
+                    </group>
+
+                    <group string="Accessories">
+                        <field name="service_order_accessories_ids" nolabel="1" colspan="2">
+                            <tree editable="1">
+                                <field name="accessories_id" options="{'no_create': True}"/>
+                                <field name="asignee_user_id" options="{'no_create': True}"/>
+                                <field name="qty"/>
+                            </tree>
+                        </field>
+                    </group>
+
+                    <group string="Notes">
+                        <field name="cancel_note" colspan="2"/>
+                        <field name="customer_note" colspan="2"/>
+                        <field name="warranty_end_date" colspan="2" readonly="1"/>
+                        <field name="done_date" colspan="2" readonly="1"/>
+                    </group>
+
+                    <!-- <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div> -->
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="service_order_action" model="ir.actions.act_window">
+        <field name="name">Service Order</field>
+        <field name="res_model">service.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state', 'not in', ('cancel', 'done'))]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                There's no service order yet :)
+            </p>
+        </field>
+    </record>
+
+    <record id="finished_service_order_action" model="ir.actions.act_window">
+        <field name="name">Finished Service Order</field>
+        <field name="res_model">service.order</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state', 'in', ('cancel', 'done'))]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                There's no service order yet :)
+            </p>
+        </field>
+    </record>
+    
+</odoo>

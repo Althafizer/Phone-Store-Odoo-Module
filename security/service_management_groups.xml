@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record model="ir.module.category" id="module_category_service_management">
+        <field name="name">Service Management</field>
+        <field name="description">The Service Management Applilcation</field>
+        <field name="sequence">59</field>
+    </record>
+
+    <record id="group_service_management_base" model="res.groups">
+        <field name="name">Service Management: User</field>
+        <field name="category_id" ref="service_management.module_category_service_management"/>
+    </record>
+
+    <record id="group_service_management_setting" model="res.groups">
+        <field name="name">Service Management: Setting</field>
+        <field name="category_id" ref="service_management.module_category_service_management"/>
+    </record>
+
+    <record id="group_service_management_retail_administrator" model="res.groups">
+        <field name="name">Retail: Administrator</field>
+        <field name="category_id" ref="service_management.module_category_service_management"/>
+        <field name="implied_ids" eval="[(4, ref('service_management.group_service_management_base'))]"/>
+    </record>
+
+    <!-- TODO : apakah kode dibawah ini masih diperlukan? -->
+    <!-- <record id="group_service_management_retail_engineer" model="res.groups">
+        <field name="name">Retail: User</field>
+        <field name="category_id" ref="service_management.module_category_service_management"/>
+        <field name="implied_ids" eval="[(4, ref('service_management.group_service_management_base'))]"/>
+    </record>
+
+    <record id="service_order_retail_rule" model="ir.rule">
+        <field name="name">Service Management: Service Order Retail</field>
+        <field name="model_id" search="[('model','=','service.order')]" model="ir.model"/>
+        <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        <field name="groups" eval="[(4, ref('service_management.group_service_management_retail_administrator')), (4, ref('service_management.group_service_management_retail_engineer'))]"/>
+    </record> -->
+</odoo>

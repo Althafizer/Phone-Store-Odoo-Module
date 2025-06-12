@@ -1,0 +1,216 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="service_order_device_view_tree" model="ir.ui.view">
+        <field name="name">service.order.device.tree</field>
+        <field name="model">service.management.device</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="device_type"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="service_order_device_action" model="ir.actions.act_window">
+        <field name="name">Device Type</field>
+        <field name="res_model">service.management.device</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                There's no service device yet :)
+            </p>
+        </field>
+    </record>
+
+    <menuitem action="service_order_device_action" parent="service_management.service_configuration" id="service_order_device" name="Device Type" sequence="1" />
+
+    <record id="service_management_device_color_view_tree" model="ir.ui.view">
+        <field name="name">service.management.device.color.tree</field>
+        <field name="model">service.management.device.color</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="service_management_device_color_action" model="ir.actions.act_window">
+        <field name="name">Device Color</field>
+        <field name="res_model">service.management.device.color</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                There's no data yet :)
+            </p>
+        </field>
+    </record>
+
+    <menuitem action="service_management_device_color_action" parent="service_management.service_configuration" id="service_management_device_color" name="Device Color" sequence="2" />
+
+    <record id="service_management_device_ram_view_tree" model="ir.ui.view">
+        <field name="name">service.management.device.ram.tree</field>
+        <field name="model">service.management.device.ram</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="service_management_device_ram_action" model="ir.actions.act_window">
+        <field name="name">Device RAM</field>
+        <field name="res_model">service.management.device.ram</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                There's no data yet :)
+            </p>
+        </field>
+    </record>
+
+    <menuitem action="service_management_device_ram_action" parent="service_management.service_configuration" id="service_management_device_ram" name="Device RAM" sequence="3" />
+
+    <record id="service_management_device_storage_view_tree" model="ir.ui.view">
+        <field name="name">service.management.device.storage.tree</field>
+        <field name="model">service.management.device.storage</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="service_management_device_storage_action" model="ir.actions.act_window">
+        <field name="name">Device Storage</field>
+        <field name="res_model">service.management.device.storage</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                There's no data yet :)
+            </p>
+        </field>
+    </record>
+
+    <menuitem action="service_management_device_storage_action" parent="service_management.service_configuration" id="service_management_device_storage" name="Device Storage" sequence="4" />
+
+    <record id="service_order_checklist_component_view_tree" model="ir.ui.view">
+        <field name="name">service.order.checklist.component.tree</field>
+        <field name="model">service.management.component</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="service_order_checklist_component_action" model="ir.actions.act_window">
+        <field name="name">Service Order Checklist Component</field>
+        <field name="res_model">service.management.component</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                There's no component yet :)
+            </p>
+        </field>
+    </record>
+
+    <menuitem action="service_order_checklist_component_action" parent="service_management.service_configuration" id="service_order_checklist_component" name="Component" sequence="5" />
+
+    <record id="service_order_checklist_template_action" model="ir.actions.act_window">
+        <field name="name">Service Order Checklist Template</field>
+        <field name="res_model">service.order.checklist.template</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                There's no checklist template yet :)
+            </p>
+        </field>
+    </record>
+
+    <menuitem action="service_order_checklist_template_action" parent="service_management.service_configuration" id="service_order_checklist_template" name="Checklist Template" sequence="6" />
+
+    <record id="service_order_sparepart_view_tree" model="ir.ui.view">
+        <field name="name">service.order.sparepart.tree</field>
+        <field name="model">service.management.sparepart</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="service_order_sparepart_action" model="ir.actions.act_window">
+        <field name="name">Service Order Sparepart</field>
+        <field name="res_model">service.management.sparepart</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                There's no service sparepart yet :)
+            </p>
+        </field>
+    </record>
+
+    <menuitem action="service_order_sparepart_action" parent="service_management.service_configuration" id="service_order_sparepart" name="Sparepart" sequence="7" />
+
+    <record id="service_order_service_view_tree" model="ir.ui.view">
+        <field name="name">service.order.service.tree</field>
+        <field name="model">service.management.service</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="service_management_service_action" model="ir.actions.act_window">
+        <field name="name">Services</field>
+        <field name="res_model">service.management.service</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                There's no data yet :)
+            </p>
+        </field>
+    </record>
+
+    <menuitem action="service_management_service_action" parent="service_management.service_configuration" id="service_management_service" name="Services" sequence="8" />
+
+    <record id="service_management_company_action" model="ir.actions.act_window">
+        <field name="name">Companies</field>
+        <field name="res_model">service.management.company</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                There's no data yet :)
+            </p>
+        </field>
+    </record>
+
+    <menuitem action="service_management_company_action" parent="service_management.service_configuration" id="service_management_company" name="Companies" sequence="9" />
+
+    <record id="service_order_accessories_view_tree" model="ir.ui.view">
+        <field name="name">service.order.accessories.tree</field>
+        <field name="model">service.management.accessories</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="code"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="service_order_accessories_action" model="ir.actions.act_window">
+        <field name="name">Service Order accessories</field>
+        <field name="res_model">service.management.accessories</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                There's no service accessories yet :)
+            </p>
+        </field>
+    </record>
+
+    <menuitem action="service_order_accessories_action" parent="service_management.service_configuration" id="service_management_accessories" name="Accessories" sequence="7" />
+
+</odoo>

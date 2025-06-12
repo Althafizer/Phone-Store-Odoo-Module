@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+
+    <record id="seq_service_order" model="ir.sequence">
+        <field name="name">Service Order</field>
+        <field name="code">service.order</field>
+        <field name="prefix">SVO/%(year)s/%(month)s/</field>
+        <field name="padding">7</field>
+    </record>
+
+    <record id="seq_service_center_delivery" model="ir.sequence">
+        <field name="name">Service Center Delivery</field>
+        <field name="code">service.center.delivery</field>
+        <field name="prefix">/%(year)s/%(month)s/</field>
+        <field name="padding">7</field>
+    </record>
+    
+    <record id="seq_sku_generator" model="ir.sequence">
+        <field name="name">SKU Generator Sequence</field>
+        <field name="code">sku.generator.sequence</field>
+        <field name="prefix">SKU</field>
+        <field name="padding">7</field>
+    </record>
+
+</odoo>

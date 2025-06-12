@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<odoo>
+    <menuitem id="service_order_root" name="Service Management" sequence="6">
+        <menuitem id="service" name="Service" sequence="1">
+            <menuitem action="service_order_action" id="service_order" name="Service Order" sequence="1"/>
+            <menuitem action="finished_service_order_action" id="finished_service_order" name="Finished Service Order" sequence="2"/>
+        </menuitem>
+        <menuitem id="service_configuration" name="Configurations" sequence="2" groups="service_management.group_service_management_setting"/>
+        <menuitem id="service_utility" name="Utility" sequence="3" groups="service_management.group_service_management_setting"/>
+    </menuitem>
+</odoo>
